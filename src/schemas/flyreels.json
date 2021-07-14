@@ -1,0 +1,31 @@
+{
+  "$jsonSchema": {
+    "title": "Flyreel",
+    "description": "Core Flyreel information",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for a flyreel",
+            "type": "string"
+        },
+        "organizationId": {
+            "description": "Unique identifier of an orginization",
+            "type": "string"
+        },
+        "botId": {
+            "description": "Unique identifier of a bot",
+            "type": "string"
+        },
+        "status": {
+            "description": "Status of the flyreel",
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "organizationId",
+        "botId",
+        "status"
+    ]
+}
+}

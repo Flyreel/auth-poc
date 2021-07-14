@@ -1,0 +1,55 @@
+{
+  "$jsonSchema": {
+    "title": "User",
+    "description": "Core user information",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for a user",
+            "type": "string"
+        },
+        "firstName": {
+            "description": "First name of user",
+            "type": "string"
+        },
+        "lastName": {
+            "description": "Last name of user",
+            "type": "string"
+        },
+        "email": {
+            "description": "User's email",
+            "type": "string"
+        },
+        "organizations": {
+            "description": "orginizations the user belongs to",
+            "type": "array",
+            "items": {
+                "organization": {
+                    "type": "object",
+                    "description": "A unique organization",
+                    "properties": {
+                        "id": {
+                            "description": "A unique identifier for an organization",
+                            "type": "string"
+                        },
+                        "name": {
+                            "description": "name of the organization",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "name"
+                    ]
+                }
+            }
+        },
+    "required": [
+        "id",
+        "organizationId",
+        "botId",
+        "status"
+    ]
+}
+}
+}

@@ -1,0 +1,21 @@
+{
+  "$jsonSchema": {
+    "title": "Organization",
+    "description": "Core organization information",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for an Organization",
+            "type": "string"
+        },
+        "name": {
+            "description": "Name of an orginization",
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "name"
+    ]
+}
+}

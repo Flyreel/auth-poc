@@ -1,0 +1,34 @@
+{
+  "$jsonSchema": {
+    "title": "Role",
+    "description": "Core role information",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for a flyreel",
+            "type": "string"
+        },
+        "organizationId": {
+            "description": "Unique identifier of an orginization the role belongs to",
+            "type": "string"
+        },
+        "name": {
+            "description": "Name of a role",
+            "type": "string"
+        },
+        "permissions": {
+            "type": "array",
+            "items": {
+                "description": "List of permissions",
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "id",
+        "organizationId",
+        "botId",
+        "status"
+    ]
+}
+}
