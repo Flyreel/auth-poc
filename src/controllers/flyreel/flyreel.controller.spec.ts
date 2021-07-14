@@ -1,18 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FlyreelController } from './flyreel.controller';
 
-describe('FlyreelController', () => {
-  let controller: FlyreelController;
+describe('AppController', () => {
+  let appController: FlyreelController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const app: TestingModule = await Test.createTestingModule({
       controllers: [FlyreelController],
+      // providers: [AppService],
     }).compile();
 
-    controller = module.get<FlyreelController>(FlyreelController);
+    appController = app.get<FlyreelController>(FlyreelController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('root', () => {
+    it('should return "Hello World!"', () => {
+      expect(appController.getFlyreel()).toBe('Hello World!');
+    });
   });
 });
