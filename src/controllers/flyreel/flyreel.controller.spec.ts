@@ -14,8 +14,10 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getFlyreel()).toBe('Hello World!');
+    it('should return "Hello World!"', async () => {
+      expect(await appController.getFlyreelById('4543543543dsfdsf')).toBe(
+        'Hello World!',
+      );
     });
   });
 });

@@ -1,21 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MongoClient, Db } from 'mongodb';
+import { logger } from '../../utils';
 
 @Module({
   providers: [
     {
       provide: 'DATABASE_CONNECTION',
       useFactory: async (): Promise<Db> => {
-        try {
-          const client = await MongoClient.connect('mongodb://127.0.0.1', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-          });
+        const client = await MongoClient.connect(process.env.MONGODB);
 
-          return client.db('mydb');
-        } catch (e) {
-          throw e;
-        }
+        logger.log('Connected to mongodb');
+
+        return client.db('flyreel');
       },
     },
   ],
