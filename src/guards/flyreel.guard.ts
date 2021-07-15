@@ -6,31 +6,34 @@ import {
   AppAbility,
   CaslAbilityFactory,
 } from 'src/modules/casl/ability.factory';
+import { UserService } from 'src/services/user/user.service';
+import { logger } from 'src/utils';
 
 @Injectable()
 export class FlyreelGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private caslAbilityFactory: CaslAbilityFactory,
+    private userService: UserService,
   ) {}
 
-  canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.get<string[]>(
-      ROLES_KEY,
-      context.getHandler(),
-    );
-    if (!requiredRoles) {
-      return true;
-    }
-    const request = context.switchToHttp().getRequest();
-    const user = request.user as User;
-    const { organization } = request;
-    const userOrganization = user.organizations.filter(
-      (o) => o._id === organization,
-    ) as UserOrganization[];
-    if (!userOrganization?.length) return false;
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    // const requiredRoles = this.reflector.get<string[]>(
+    //   ROLES_KEY,
+    //   context.getHandler(),
+    // );
+    // if (!requiredRoles) {
+    //   return true;
+    // }
 
-    const ability = this.caslAbilityFactory.createForUser(user);
+    const request = context.switchToHttp().getRequest();
+    const { userid: userId } = request.headers;
+
+    const user = await this.userService.getUser(userId as string);
+
+    const { organization } = request;
+
+    const ability = this.caslAbilityFactory.createForUser(user, organization);
 
     // return policyHandlers.every((handler) =>
     //   this.execPolicyHandler(handler, ability),

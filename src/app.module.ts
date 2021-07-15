@@ -12,6 +12,7 @@ import { FlyreelController } from './controllers/flyreel/flyreel.controller';
 import { FlyreelGuard } from './guards/flyreel.guard';
 import { CaslModule } from './modules/casl/casl.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { UserService } from './services/user/user.service';
 
 @Module({
   imports: [ConfigModule.forRoot(), DatabaseModule, CaslModule],
@@ -22,12 +23,13 @@ import { DatabaseModule } from './modules/database/database.module';
       provide: APP_GUARD,
       useClass: FlyreelGuard,
     },
+    UserService,
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     // consumer
-    //   .apply(LoggerMiddleware)
-    //   .forRoutes({ path: 'cats', method: RequestMethod.GET });
+    //   .apply(AuthMiddleware)
+    //   .forRoutes({ path: 'flyreels', method: RequestMethod.ALL });
   }
 }

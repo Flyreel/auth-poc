@@ -7,7 +7,8 @@ import {
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 import { Flyreel } from 'src/models/flyreel';
-import { User } from 'src/models/user';
+import { User, UserOrganization } from 'src/models/user';
+import { permissionsMap } from '../../constants';
 
 type Subjects = InferSubjects<typeof Flyreel | typeof User> | 'all';
 
@@ -15,15 +16,49 @@ export type AppAbility = Ability<[Action, Subjects]>;
 
 @Injectable()
 export class CaslAbilityFactory {
-  async createForUser(user: User) {
+  async createForUser(user: User, organizationId: string) {
     const { can, cannot, build } = new AbilityBuilder<
       Ability<[Action, Subjects]>
     >(Ability as AbilityClass<AppAbility>);
 
-    if (user.isAdmin) {
-      can(Action.Manage, 'all'); // read-write access to everything
-    } else {
-      can(Action.Read, 'all'); // read-only access to everything
+    const userOrganizations = user.organizations.filter(
+      (o) => o._id === organizationId,
+    ) as UserOrganization[];
+
+    if (userOrganizations?.length) {
+      const allPermissions = new Set(
+        userOrganizations.reduce((accu: string[], org: UserOrganization) => {
+          org.roles.forEach((role) => {
+            accu.concat(role.permissions);
+          });
+
+          return accu;
+        }, [] as string[]),
+      );
+
+      if (allPermissions.size) {
+        allPermissions.forEach((p) => {
+          const { actions, subjects, conditions, fields } = permissionsMap[p];
+          if (actions?.length) {
+            actions.forEach((action) => {
+              if (subjects?.length) {
+                subjects.forEach((subject) => {
+                  if (fields) {
+                    can(action, subject, fields);
+                  } else {
+                    can(action, subject);
+                  }
+                  if (conditions?.length) {
+                    conditions.forEach((condition) => {
+                      can(action, subject, condition);
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
     }
 
     can(Action.Update, Flyreel);
