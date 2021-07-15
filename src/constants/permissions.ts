@@ -1,27 +1,27 @@
 export const permissionsMap = {
   'flyreel:manage': {
     actions: ['manage'],
-    subjects: ['flyreel'],
+    subjects: ['Flyreel'],
   },
   'flyreel:read': {
     actions: 'read',
-    subjects: ['flyreel'],
+    subjects: ['Flyreel'],
   },
   'flyreel:update': {
     actions: ['update'],
-    subjects: ['flyreel'],
+    subjects: ['Flyreel'],
     contitions: {},
     fields: [],
   },
   'flyreel:create': {
     actions: 'create',
-    subjects: ['flyreel'],
+    subjects: ['Flyreel'],
     contitions: {},
     fields: [],
   },
   'flyreel:delete': {
     actions: ['delete'],
-    subjects: ['flyreel'],
+    subjects: ['Flyreel'],
     contitions: {},
     fields: [],
   },

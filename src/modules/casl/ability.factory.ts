@@ -17,9 +17,9 @@ export type AppAbility = Ability<[Action, Subjects]>;
 @Injectable()
 export class CaslAbilityFactory {
   async createForUser(user: User, organizationId: string) {
-    const { can, cannot, build } = new AbilityBuilder<
-      Ability<[Action, Subjects]>
-    >(Ability as AbilityClass<AppAbility>);
+    const { can, build } = new AbilityBuilder<Ability<[Action, Subjects]>>(
+      Ability as AbilityClass<AppAbility>,
+    );
 
     const userOrganizations = user.organizations.filter(
       (o) => o._id === organizationId,
@@ -43,12 +43,13 @@ export class CaslAbilityFactory {
             actions.forEach((action) => {
               if (subjects?.length) {
                 subjects.forEach((subject) => {
-                  if (fields) {
+                  if (fields?.length && conditions?.length) {
+                    conditions.forEach((condition) => {
+                      can(action, subject, fields, condition);
+                    });
+                  } else if (fields?.length) {
                     can(action, subject, fields);
-                  } else {
-                    can(action, subject);
-                  }
-                  if (conditions?.length) {
+                  } else if (conditions?.length) {
                     conditions.forEach((condition) => {
                       can(action, subject, condition);
                     });
@@ -60,11 +61,6 @@ export class CaslAbilityFactory {
         });
       }
     }
-
-    can(Action.Update, Flyreel);
-    cannot(Action.Delete, Flyreel, {
-      organizationId: { $in: user.organizations.map((o) => o._id) },
-    });
 
     return build({
       // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details
