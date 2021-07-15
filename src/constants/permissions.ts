@@ -1,26 +1,28 @@
+import { Action } from '../modules/casl';
+
 export const permissionsMap = {
   'flyreel:manage': {
-    actions: ['manage'],
+    actions: [Action.Manage],
     subjects: ['Flyreel'],
   },
   'flyreel:read': {
-    actions: 'read',
+    actions: [Action.Read],
     subjects: ['Flyreel'],
   },
   'flyreel:update': {
-    actions: ['update'],
+    actions: [Action.Update],
     subjects: ['Flyreel'],
     contitions: {},
     fields: [],
   },
   'flyreel:create': {
-    actions: 'create',
+    actions: [Action.Create],
     subjects: ['Flyreel'],
     contitions: {},
     fields: [],
   },
   'flyreel:delete': {
-    actions: ['delete'],
+    actions: [Action.Delete],
     subjects: ['Flyreel'],
     contitions: {},
     fields: [],
