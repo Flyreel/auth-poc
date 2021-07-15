@@ -7,11 +7,11 @@ import { logger } from '../../utils';
     {
       provide: 'DATABASE_CONNECTION',
       useFactory: async (): Promise<Db> => {
-        const client = await MongoClient.connect(process.env.MONGODB);
-
+        logger.log('Connecting to mongodb...');
+        const client = await MongoClient.connect(process.env.MONGO_URI);
         logger.log('Connected to mongodb');
 
-        return client.db('flyreel');
+        return client.db('future');
       },
     },
   ],

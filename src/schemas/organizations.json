@@ -4,7 +4,7 @@
     "description": "Core organization information",
     "type": "object",
     "properties": {
-        "id": {
+        "_id": {
             "description": "A unique identifier for an Organization",
             "type": "string"
         },

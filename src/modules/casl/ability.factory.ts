@@ -6,8 +6,8 @@ import {
   InferSubjects,
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { Flyreel } from 'src/models/flyreel.model';
-import { User } from 'src/models/user.model';
+import { Flyreel } from 'src/models/flyreel';
+import { User } from 'src/models/user';
 
 type Subjects = InferSubjects<typeof Flyreel | typeof User> | 'all';
 
@@ -27,7 +27,9 @@ export class CaslAbilityFactory {
     }
 
     can(Action.Update, Flyreel);
-    cannot(Action.Delete, Flyreel, { carrier: user.carrier });
+    cannot(Action.Delete, Flyreel, {
+      organizationId: { $in: user.organizations.map((o) => o._id) },
+    });
 
     return build({
       // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details

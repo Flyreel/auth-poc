@@ -4,15 +4,17 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { FlyreelController } from './controllers/flyreel/flyreel.controller';
 import { FlyreelGuard } from './guards/flyreel.guard';
+import { CaslModule } from './modules/casl/casl.module';
 import { DatabaseModule } from './modules/database/database.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [ConfigModule.forRoot(), DatabaseModule, CaslModule],
   controllers: [AppController, FlyreelController],
   providers: [
     AppService,
