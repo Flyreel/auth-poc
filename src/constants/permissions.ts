@@ -14,23 +14,25 @@ export const permissionsMap = {
   'flyreel:read': {
     actions: [Action.Read],
     subjects: ['Flyreel'],
+    conditions: [{ status: 'started', expiration: { $gt: new Date() } }],
+    fields: ['status', 'botId'],
   },
   'flyreel:update': {
     actions: [Action.Update],
     subjects: ['Flyreel'],
-    contitions: {},
-    fields: [],
+    conditions: [],
+    fields: ['status', 'botId'],
   },
   'flyreel:create': {
     actions: [Action.Create],
     subjects: ['Flyreel'],
-    contitions: {},
+    conditions: [],
     fields: [],
   },
   'flyreel:delete': {
     actions: [Action.Delete],
     subjects: ['Flyreel'],
-    contitions: {},
+    conditions: [],
     fields: [],
   },
 };

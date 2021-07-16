@@ -1,9 +1,9 @@
 export class Flyreel {
-  _id: string;
-  organizationId: string;
-  botId: string;
-  internalWorkflow: string;
-  status: string;
-  integrations: Record<string, any>;
-  customFields: Record<string, any>;
+  constructor(
+    private _id: string,
+    private organizationId: string,
+    private botId: string,
+    private status: string,
+    private expiration: Date, // private internalWorkflow: string, // private integrations: Record<string, any>, // private customFields: Record<string, any>,
+  ) {}
 }
