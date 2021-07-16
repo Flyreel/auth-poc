@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Db, ObjectId } from 'mongodb';
 import { User } from 'src/models';
+import { logger } from 'src/utils';
 
 @Injectable()
 export class UserService {
@@ -18,19 +19,15 @@ export class UserService {
     if (!ObjectId.isValid(id)) {
       throw new BadRequestException();
     }
+    const userDoc = await this.db.collection('users').findOne({
+      _id: new ObjectId(id),
+    });
 
-    const user = JSON.parse(
-      JSON.stringify(
-        await this.db.collection('users').findOne({
-          _id: new ObjectId(id),
-        }),
-      ),
-    ) as User;
-
-    if (!user) {
+    if (!userDoc) {
+      logger.error(`User ${id} does not exist`);
       throw new NotFoundException();
     }
 
-    return user;
+    return JSON.parse(JSON.stringify(userDoc));
   }
 }
