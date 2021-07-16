@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { FlyreelController } from './controllers/flyreel/flyreel.controller';
 import { FlyreelGuard } from './guards/flyreel.guard';
+import { AuthMiddleware } from './middlewares';
 import { CaslModule } from './modules/casl/casl.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { UserService } from './services/user/user.service';
@@ -28,8 +29,8 @@ import { UserService } from './services/user/user.service';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    // consumer
-    //   .apply(AuthMiddleware)
-    //   .forRoutes({ path: 'flyreels', method: RequestMethod.ALL });
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes({ path: 'flyreels', method: RequestMethod.ALL });
   }
 }

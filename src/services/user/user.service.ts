@@ -3,7 +3,6 @@ import {
   Inject,
   Injectable,
   NotFoundException,
-  Param,
 } from '@nestjs/common';
 import { Db, ObjectId } from 'mongodb';
 import { User } from 'src/models';

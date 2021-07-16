@@ -6,11 +6,12 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 export class AuthMiddleware implements NestMiddleware {
   constructor(private userService: UserService) {}
   async use(req: FastifyRequest, res: FastifyReply, next: () => void) {
-    // const { userid: userId } = req.headers;
+    const { userid: userId, organizationid: organizationId } = req.headers;
 
-    // const user = await this.userService.getUser(userId as string);
-    // req['user'] = user;
-    // console.log('req user', JSON.stringify(req['user']));
+    const user = await this.userService.getUser(userId as string);
+
+    Object.assign(req, { user, organizationId });
+
     next();
   }
 }

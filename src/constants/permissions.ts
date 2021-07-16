@@ -1,4 +1,10 @@
-import { Action } from '../modules/casl';
+export enum Action {
+  Manage = 'manage',
+  Create = 'create',
+  Read = 'read',
+  Update = 'update',
+  Delete = 'delete',
+}
 
 export const permissionsMap = {
   'flyreel:manage': {
